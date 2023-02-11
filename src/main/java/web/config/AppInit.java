@@ -10,30 +10,23 @@ import web.controller.HelloController;
 
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-//    public ApplicationInit() {
-//        super();
-//    }
-
     // Метод, указывающий на класс конфигурации
     @Override
     protected Class<?>[] getRootConfigClasses() {
-//        return new Class[]{HibernateConfig.class};
         return null;
     }
-    // Добавление конфигурации, в которой инициализируем ViewResolver, для корректного отображения jsp.
+    // Добавление конфигурации, в которой инициализируем ViewResolver
     @Override
     protected Class<?>[] getServletConfigClasses() {
         return new Class<?>[]{
                 WebConfig.class
         };
     }
-
     /* Данный метод указывает url, на котором будет базироваться приложение */
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
-
     @Override
     public void onStartup(ServletContext context) throws ServletException {
         super.onStartup(context);
