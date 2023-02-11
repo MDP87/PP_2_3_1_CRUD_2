@@ -1,11 +1,13 @@
 package web.controller;
 
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,7 +45,10 @@ public class UserController {
     return "add";
   }
   @PostMapping("/addNewUser")
-  public String addNewUser(@ModelAttribute User user) {
+  public String addNewUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    if (bindingResult.hasErrors())
+      return "add";
+
     userRepository.add(user);
     return "redirect:/users";
   }
@@ -53,7 +58,10 @@ public class UserController {
     return "update";
   }
   @PatchMapping("/user/{id}")
-  public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id ) {
+  public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable("id") long id ) {
+    if (bindingResult.hasErrors())
+      return "update";
+
     userRepository.updateUser(user, id);
     return "redirect:/users";
   }
